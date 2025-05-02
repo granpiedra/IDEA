@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catálogo de Pegatinas para Ropa</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f0f8ff;
+    }
+    header {
+      background-color: #ff69b4;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header img {
+      height: 50px;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .carousel {
+      position: relative;
+      max-width: 100%;
+      margin: auto;
+      overflow: hidden;
+    }
+    .carousel img {
+      width: 100%;
+      display: none;
+    }
+    .carousel img.active {
+      display: block;
+    }
+    .section {
+      padding: 20px;
+    }
+    .section h2 {
+      text-align: center;
+      color: #333;
+    }
+    .designs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 15px;
+    }
+    .design-card {
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      width: 40%;
+      aspect-ratio: 1 / 1.2;
+      box-sizing: border-box;
+      transition: transform 0.3s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .design-card:hover {
+      transform: scale(1.05);
+    }
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+    .carousel-images {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    .carousel-images img {
+      width: 100%;
+      height: auto;
+      max-height: 200px;
+      object-fit: cover;
+    }
+    .carousel-container .prev,
+    .carousel-container .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+    }
+    .carousel-container .prev { left: 0; }
+    .carousel-container .next { right: 0; }
+    .design-card h3 {
+      margin: 10px 0 5px;
+    }
+    .design-card p {
+      margin: 5px 0;
+    }
+    .design-card button,
+    .design-card a.create-sticker-btn {
+      background-color: #ff69b4;
+      color: #fff;
+      border: none;
+      padding: 8px;
+      margin: 5px 0;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+    .design-card button:hover,
+    .design-card a.create-sticker-btn:hover {
+      background-color: #ff1493;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      padding-top: 60px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.9);
+    }
+    .modal-content {
+      margin: auto;
+      display: block;
+      max-width: 80%;
+    }
+    .close {
+      position: absolute;
+      top: 30px;
+      right: 35px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .about {
+      background-color: #fff0f5;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px;
+    }
+    .about h2 {
+      text-align: center;
+    }
+    .about p {
+      max-width: 800px;
+      margin: auto;
+      line-height: 1.6;
+    }
+    .language-selector {
+      margin-left: 15px;
+    }
+    .language-selector select {
+      padding: 5px;
+      border-radius: 5px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="Imagenes/IDEA.png" alt="Logo" />
+    <nav>
+      <a href="#designs">Diseños</a>
+      <a href="#about">Quiénes Somos</a>
+      <div class="language-selector">
+        <select id="language-select">
+          <option value="es">Español</option>
+          <option value="en">English</option>
+          <option value="pt">Português</option>
+        </select>
+      </div>
+    </nav>
+  </header>
+
+  <section class="carousel">
+    <img src="Imagenes/Baner1.png" class="active" alt="Imagen 1 del carrusel">
+    <img src="Imagenes/idea 1.jpg" alt="Imagen 2 del carrusel">
+    <img src="Imagenes/9.png" alt="Imagen 3 del carrusel">
+  </section>
+
+  <section class="section" id="featured">
+    <h2>Diseños Destacados</h2>
+    <div class="designs">
+      <div class="design-card">
+        <div class="carousel-container">
+          <button class="prev">&#10094;</button>
+          <div class="carousel-images">
+            <img src="Imagenes/1.png" alt="Diseño destacado 1a">
+            <img src="destacado1b.jpg" alt="Diseño destacado 1b">
+          </div>
+          <button class="next">&#10095;</button>
+        </div>
+        <button onclick="sendWhatsApp('Diseño 1')">Pedir por WhatsApp</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="designs">
+    <h2>Todos los Diseños</h2>
+    <div class="designs">
+      <div class="design-card">
+        <div class="carousel-container">
+          <button class="prev">&#10094;</button>
+          <div class="carousel-images">
+            <img src="Imagenes/1.png" alt="Diseño 1a">
+            <img src="design1b.jpg" alt="Diseño 1b">
+          </div>
+          <button class="next">&#10095;</button>
+        </div>
+          <button onclick="sendWhatsApp('Diseño A')">Pedir por WhatsApp</button>
+          
+      </div>
+      <div class="design-card">
+        <div class="carousel-container">
+          <button class="prev">&#10094;</button>
+          <div class="carousel-images">
+            <img src="Imagenes/2.jpg" alt="Diseño 1a">
+            <img src="design1b.jpg" alt="Diseño 1b">
+          </div>
+          <button class="next">&#10095;</button>
+        </div>
+          <button onclick="sendWhatsApp('Diseño A')">Pedir por WhatsApp</button>
+          
+      </div>
+      <div class="design-card">
+        <div class="carousel-container">
+          <button class="prev">&#10094;</button>
+          <div class="carousel-images">
+            <img src="Imagenes/3.png" alt="Diseño 1a">
+            <img src="design1b.jpg" alt="Diseño 1b">
+          </div>
+          <button class="next">&#10095;</button>
+        </div>
+          <button onclick="sendWhatsApp('Diseño A')">Pedir por WhatsApp</button>
+         
+      </div>
+      <div class="design-card">
+        <div class="carousel-container">
+          <button class="prev">&#10094;</button>
+          <div class="carousel-images">
+            <img src="Imagenes/4.png" alt="Diseño 1a">
+            <img src="design1b.jpg" alt="Diseño 1b">
+          </div>
+          <button class="next">&#10095;</button>
+        </div>
+          <button onclick="sendWhatsApp('Diseño A')">Pedir por WhatsApp</button>
+      </div>
+      <div class="design-card">
+        <div class="carousel-container">
+          <button class="prev">&#10094;</button>
+          <div class="carousel-images">
+            <img src="Imagenes/5.png" alt="Diseño 1a">
+            <img src="design1b.jpg" alt="Diseño 1b">
+          </div>
+          <button class="next">&#10095;</button>
+        </div>
+          <button onclick="sendWhatsApp('Diseño A')">Pedir por WhatsApp</button>
+      </div>
+      <div class="design-card">
+        <div class="carousel-container">
+          <button class="prev">&#10094;</button>
+          <div class="carousel-images">
+            <img src="Imagenes/6.png" alt="Diseño 1a">
+            <img src="design1b.jpg" alt="Diseño 1b">
+          </div>
+          <button class="next">&#10095;</button>
+        </div>
+          <button onclick="sendWhatsApp('Diseño A')">Pedir por WhatsApp</button>
+      </div>
+      <div class="design-card">
+        <div class="carousel-container">
+          <button class="prev">&#10094;</button>
+          <div class="carousel-images">
+            <img src="Imagenes/7.png" alt="Diseño 1a">
+            <img src="design1b.jpg" alt="Diseño 1b">
+          </div>
+          <button class="next">&#10095;</button>
+        </div>
+          <button onclick="sendWhatsApp('Diseño A')">Pedir por WhatsApp</button>
+      </div>
+      <div class="design-card">
+        <div class="carousel-container">
+          <button class="prev">&#10094;</button>
+          <div class="carousel-images">
+            <img src="Imagenes/8.png" alt="Diseño 1a">
+            <img src="design1b.jpg" alt="Diseño 1b">
+          </div>
+          <button class="next">&#10095;</button>
+        </div>
+          <button onclick="sendWhatsApp('Diseño A')">Pedir por WhatsApp</button>
+      </div>
+      <div class="design-card">
+        <div class="carousel-container">
+          <button class="prev">&#10094;</button>
+          <div class="carousel-images">
+            <img src="Imagenes/9.png" alt="Diseño 1a">
+            <img src="design1b.jpg" alt="Diseño 1b">
+          </div>
+          <button class="next">&#10095;</button>
+        </div>
+          <button onclick="sendWhatsApp('Diseño A')">Pedir por WhatsApp</button>
+      </div>
+      <div class="design-card">
+        <div class="carousel-container">
+          <button class="prev">&#10094;</button>
+          <div class="carousel-images">
+            <img src="Imagenes/10.png" alt="Diseño 1a">
+            <img src="design1b.jpg" alt="Diseño 1b">
+          </div>
+          <button class="next">&#10095;</button>
+        </div>
+          <button onclick="sendWhatsApp('Diseño A')">Pedir por WhatsApp</button>
+      </div>
+      <div class="design-card">
+        <div class="carousel-container">
+          <button class="prev">&#10094;</button>
+          <div class="carousel-images">
+            <img src="Imagenes/12.png" alt="Diseño 1a">
+            <img src="design1b.jpg" alt="Diseño 1b">
+          </div>
+          <button class="next">&#10095;</button>
+        </div>
+          <button onclick="sendWhatsApp('Diseño A')">Pedir por WhatsApp</button>
+      </div>
+      <div class="design-card">
+        <div class="carousel-container">
+          <button class="prev">&#10094;</button>
+          <div class="carousel-images">
+            <img src="Imagenes/13.png" alt="Diseño 1a">
+            <img src="design1b.jpg" alt="Diseño 1b">
+          </div>
+          <button class="next">&#10095;</button>
+        </div>
+          <button onclick="sendWhatsApp('Diseño A')">Pedir por WhatsApp</button>
+      </div>
+      <div class="design-card">
+        <div class="carousel-container">
+          <button class="prev">&#10094;</button>
+          <div class="carousel-images">
+            <img src="Imagenes/14.png" alt="Diseño 1a">
+            <img src="design1b.jpg" alt="Diseño 1b">
+          </div>
+          <button class="next">&#10095;</button>
+        </div>
+          <button onclick="sendWhatsApp('Diseño A')">Pedir por WhatsApp</button>
+      </div>
+      <div class="design-card">
+        <div class="carousel-container">
+          <button class="prev">&#10094;</button>
+          <div class="carousel-images">
+            <img src="Imagenes/15.png" alt="Diseño 1a">
+            <img src="design1b.jpg" alt="Diseño 1b">
+          </div>
+          <button class="next">&#10095;</button>
+        </div>
+          <button onclick="sendWhatsApp('Diseño A')">Pedir por WhatsApp</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section about" id="about">
+    <h2>Quiénes Somos</h2>
+    <p>
+      Somos una empresa dedicada a la creación de pegatinas personalizadas para ropa. Nuestro objetivo es ofrecer diseños únicos y de alta calidad que permitan a nuestros clientes expresar su estilo personal. Contáctanos para más información.
+    </p>
+    <p>
+      Teléfono: +34 651 169 736<br>
+      Correo electrónico: contacto@pegatinasropa.com<br>
+      Redes sociales:
+      <a href="#">Facebook</a>,
+      <a href="#">Instagram</a>,
+      <a href="#">Twitter</a>
+    </p>
+  </section>
+
+  <div id="image-modal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modal-img">
+  </div>
+
+  <script>
+    let carouselIndex = 0;
+    const carouselImages = document.querySelectorAll('.carousel img');
+    function showCarouselImage() {
+      carouselImages.forEach((img, idx) => {
+        img.classList.toggle('active', idx === carouselIndex);
+      });
+      carouselIndex = (carouselIndex + 1) % carouselImages.length;
+    }
+    setInterval(showCarouselImage, 3000);
+  </script>
+</body>
+</html>
